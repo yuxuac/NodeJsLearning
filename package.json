@@ -1,0 +1,25 @@
+{
+  "name": "nodejslearning",
+  "version": "1.0.0",
+  "description": "ycui learning node js",
+  "main": "1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuxuac/NodeJsLearning.git"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "Yuxuan Cui",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yuxuac/NodeJsLearning/issues"
+  },
+  "homepage": "https://github.com/yuxuac/NodeJsLearning#readme",
+  "dependencies": {
+    "edge": "^5.0.0"
+  }
+}
