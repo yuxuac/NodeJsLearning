@@ -8,15 +8,17 @@ var helloworld = edge.func(function() {/*
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
+    // Should be Startup, can not change.
     public class Startup
     {
         private Regex RegexValidVehicleRegistrationNumber = new Regex(@"^(([\u4e00-\u9fa5]{1}[A-Z]{1})[-]?|([wW][Jj][\u4e00-\u9fa5]{1}[-]?)|([a-zA-Z]{2}))[A-Za-z0-9]{5}$", RegexOptions.Compiled);
         
+        // Should be Invoke, can not change.
         public async Task<object> Invoke(object input)
         {
             var item = input.ToString().Trim();
 
-            // bool as return tyep
+            // bool as return type
             return await new TaskFactory<bool>().StartNew((i) => 
             { 
                 return RegexValidVehicleRegistrationNumber.IsMatch(i.ToString()); 

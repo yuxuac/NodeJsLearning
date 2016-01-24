@@ -19,6 +19,7 @@
     <Compile Include="1.js" />
     <Compile Include="Class-1.js" />
     <Compile Include="Class.js" />
+    <Compile Include="demo1.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />

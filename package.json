@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/yuxuac/NodeJsLearning#readme",
   "dependencies": {
-    "edge": "^5.0.0"
+    "edge": "^5.0.0",
+    "https": "^1.0.0"
   }
 }

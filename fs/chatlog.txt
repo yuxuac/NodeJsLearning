@@ -1,0 +1,124 @@
+Readable file streams
+
+- Streams give us a way to asynchronously handle continuous data flows. 
+Understanding how streams work will dramatically improve the way your 
+application handles large data. Streams in Node.js are implementations 
+of the underlying abstract extreme interface and we've already been using
+ them. Let's take a look at our exercise files. In the Start folder, 
+we have an Ask.js file. I'm going to go ahead and open this up. Now, 
+this Ask.js file is the file that we built back in Chapter Three, Lesson 
+Three, and it asks our user three questions in the terminal and it saves 
+their answers into an array that we have created here on line seven.
+In this file, we've already been using streams because process standard 
+input and process standard output both implement the stream interface. 
+Take a look at the code found in the ask function on line 10 and 11. 
+Process.stdout is what we've been using to write data to the terminal, 
+but stdout is really a writeable stream. We send data chunks to it using 
+the write method. Take a look at the code that we've written on line 14 
+where we used process.stdin or process standard input.
+We are listening for a data event. Process standard input implements a 
+readable stream. Whenever a data event is raised, some data is passed 
+to the call back function. So, we've been using streams because 
+process.stdin and process.stdout implement the stream interface. 
+Streams can be readable, like stdin, writeable like standard output, 
+or duplex, which means they are both readable and writeable. Streams 
+can work with binary data or data encoded in a text format like UTF-8. 
+Let's consider how working with streams may allow us to improve our 
+application.
+Let's go back into our exercise files, which represents a very long 
+chat log of a chat conversation between Ben Franklin and George Washington. 
+So, this is a very large file. Let's go back to our exercise files and 
+also take a look at the streams.js file. We have an empty JavaScript 
+file called streams.js. We're going to go ahead and open that up. So, 
+what we want to do is go through the process of reading that chat log. 
+I'm going to go ahead and use the file system, so I will require the fs 
+module, and we've typically been reading files with fs.readFile and 
+we'll go ahead and read out chat.log file, and we will read this as text.
+So we'll read it as UTF-8 and then this call back will be invoked once 
+we actually have the file. Any errors will be passed to this function 
+as an argument and then the next argument is going to be the contents 
+of our file. I'll call this chatlog. So the entire contents of that large, 
+large, large chat log will be written to this variable, and when we 
+use fs.readFile, we'll have to wait until the entire contents of that 
+large file is buffered before this call back will be invoked.
+I'm going to go ahead and log it and I'll use a template string, so 
+we're going to use those back tick characters. So we will say we read 
+the file and, and we will just go ahead and display the length. And 
+then, I'm going to go down to the end of this document and also notify 
+my user that we are in face reading a file. So this is typically how 
+we have read files. I'm going to go over to the terminal and run this 
+application. And now, this will read the file and it works relatively 
+fast but the problem is readFile waits until the entire file is read 
+before invoking the call back and passing the file contents.
+It also buffers the entire file in one variable. If our big data app 
+experiences heavy traffic, read file is going to create latency and 
+could impact our memory. So a better solution might be to implement 
+a readable stream. Let's go back to our code. I can use the fs.createRead 
+stream to create a readable stream for the same log. What I'm going to 
+go ahead and do is create a variable and name is stream and then fs.createRead 
+stream will create a readable file stream and we are going to actually read our 
+chat.log, that large chat log, and I also want to make sure that we're going 
+to read this file as text so we will add the text encoding format.
+Great, so now, as opposed to waiting for the entire file to be read, 
+we can use this stream to start receiving small chunks of data from this 
+file. So, the very first thing I'm going to do is use a variable to 
+concatenate all of those data chunks. So here on line five, I've created 
+a data variable and we're going to concatenate the content of the chat 
+log into this variable. So, what we can do is listen for data events on 
+our stream. When a data event is raised, it means that we do not have 
+the entire file but we have a small chunk of that file.
+So whenever we raise a data event, what I'm going to go ahead and do 
+is just display the length of each of these file chunks to the terminal. 
+So I will use the standard output write method to do that and we'll also 
+write a template string. So I'm going to let our users know we have a 
+chunk coming. That's the length of the chunk. And then I will put a 
+little pipe in there just to separate further chunks. So as these data 
+events are actually being raised, we also need to concatenate each of 
+these data chunks.
+So I'm gonig to take my data and I'm going to concatenate each chunk. 
+So the other thing that we want to do is we're going to let our users 
+know that this stream has started reading our file. So we can actually 
+implement a once listener for a data event and then the very first data 
+event that occurs will cause this call back function to fire only once. 
+So in this call back function, I'm just going to go ahead and log some 
+leading spaces and under that, I'm going to go ahead and also log that 
+we started reading the file.
+All right. And then I'm also going to use this console.log again just 
+to log some more padding below that and into our terminal. Now the last 
+thing that we want to do with a readable stream is wire up a listener 
+for when this stream has finished reading the entire file. So, down here, 
+I'm going to add a listener for an end event. So whenever an end event 
+is raised on the stream, that means that we have finished gathering all 
+of those chunks of data and since we have concatenated that data variable, 
+what I'm going to go ahead and do is just output the size of that variable.
+So, I'm actually going to take the same code that I have here on line 12 
+to line 10, I will copy that and paste it down here on line 26. Instead 
+of logging "Started Reading File, I'm going to go ahead and log "Finished 
+Reading File" and instead of logging that as a string with double quotes, 
+I'm going to use a template string. So I'm going to change the quotes to 
+back ticks so that we can display the length of our data variable. Great. 
+And I will clean this file up a little bit and take one last look at all 
+of the code.
+So we've wired up three listeners to our stream. A listener that will 
+listen one time for a data event and that will let our users know that 
+we have started reading the file, a listener that will listen for every
+ data event that is raised and it will gather all of the text chunks of 
+data and concatenate our data variable, and then a listener that will 
+listen for the end event on the stream and it will show us the length 
+
+of the variable that we have concatenated. So I'm going to go ahead and 
+save this file and navigate to the terminal. And let's run it. Node streams.
+So when we do so, we see here at the bottom, "Finished Reading File" 
+and we have the full length of our file. So the file reading process 
+did not happen all at once for us in one call back. We actually 
+concatenated each of these little chunks of the file. So it looks like
+ there are about 65,000 characters in each one of these little chunks. 
+So we concatenated all of these chunks together to make the full file, 
+and you can see up here on our first data chunk that we've received, we
+ have that once events that got invoked and we have displayed the message,
+ "Started Reading File." So this is a very different way to go about 
+reading the file but it means that we do not have to wait to buffer all 
+of the data at once, that we can start receiving the text in this file 
+chunk by chunk by chunk and then we can put together those data chunks 
+to eventually have our full file.
+This is how to implement a readable file stream. So we've already been working with the stream interface, and we're going to continue to work with the stream interface in upcoming chapters.
