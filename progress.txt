@@ -1,3 +1,3 @@
-http://www.lynda.com/Node-js-tutorials/Standard-input-standard-output/417077/454433-4.html
+http://www.lynda.com/Node-js-tutorials/Collecting-POST-data/417077/454456-4.html
 
 https://nodejs.org/dist/latest-v5.x/docs/api/readline.html
