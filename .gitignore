@@ -15,6 +15,9 @@ node_modules/
 [Bb]in/
 [Oo]bj/
 
+# Documents
+[Dd]oc/
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*

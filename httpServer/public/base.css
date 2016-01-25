@@ -1,3 +1,18 @@
-p {
+body{
+	text-align: center;
+}
+
+div {
 	background-color: yellow;
+	/*display: inline;*/
+	display: inline-block;
+	border: 2px solid lightblue;
+	width: auto;
+	height: auto;
+}
+
+img {
+	display: inline;
+	width: 400px;
+	height: 400px;
 }
