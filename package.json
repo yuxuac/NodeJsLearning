@@ -23,6 +23,7 @@
     "edge": "^5.0.0",
     "express": "^4.13.4",
     "https": "^1.0.0",
-    "node-dev": "^2.7.1"
+    "node-dev": "^2.7.1",
+    "project-oxford-ocr-api": "^1.1.0"
   }
 }
